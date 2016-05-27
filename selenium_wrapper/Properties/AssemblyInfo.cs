@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RP_Copy_Dictionary")]
+[assembly: AssemblyTitle("selenium_wrapper")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RP_Copy_Dictionary")]
+[assembly: AssemblyProduct("selenium_wrapper")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("01e4ef8a-040a-4243-a455-9d511aa1b74a")]
+[assembly: Guid("e9ce27d5-17c5-49f7-ad10-bc4ce4626446")]
 
 // Version information for an assembly consists of the following four values:
 //
