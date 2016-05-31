@@ -5,20 +5,11 @@ namespace selenium_wrapper
 {
     public abstract class Page
     {
-        /// <summary>
-        /// проверяет то что 
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool CheckPage(IWebDriver driver);
+        public Page()
+        { }
+        public abstract bool IsPage(Driver driver);
 
-        /// <summary>
-        /// проверяет наличие обязательных полей на странице
-        /// </summary>
-        public void CheckRequiredElements()
-        {
-            // Рефлексией получить набор полей являющиеся обязательными
-            // Причем рекурсивно
-        }
+        // Реализовать проверку присутсвия элементов на странице
         
     }
 }
