@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
+using selenium_wrapper.attribute;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -13,22 +15,38 @@ namespace selenium_wrapper
             // frame
             // element
 
-            Type myType = this.GetType();
-            FieldInfo[] myFields = myType.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            for(int i = 0; i < myFields.Length; i++)
-            {
-                Debug.WriteLine(myFields[i].Name);
-                Debug.WriteLine(myFields[i].GetValue(this));
+            Stack<object> els = new Stack<object>();
 
-                // если объект является фреймом
+            object current = this;
+            string full_xpath = "";
+            List<Frame> frames = new List<Frame>();
+            do
+            {
+                Type myType = current.GetType();
+                FieldInfo[] fields = myType.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    var field = fields[i].GetValue(this);
+                    var attr = field.GetType().GetCustomAttribute(typeof(ContainerAttribute));
+                    if (attr != null)
+                    {
+                        els.Push(field);
+                        continue;
+                    }
+
+                    // если объект является фреймом
                     // добавить набор фреймов для включенных элементов
-                // если объект блок
+                    // если объект блок
                     // то выполняется добавление xpath блока к фрейму
-                // если это элемент
+                    // если это элемент
                     // записать подготовленные фреймы для переключения
                     // сформировать результирующий xpath
 
+                }
             }
+            while(els.Count > 0)
+
+            
 
         }
         /// <summary>
