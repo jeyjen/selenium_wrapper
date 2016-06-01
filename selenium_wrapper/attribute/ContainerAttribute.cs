@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace selenium_wrapper.attribute
 {
     [AttributeUsage(AttributeTargets.Class)]
-    class BlockAttribute : Attribute
+    class ContainerAttribute : Attribute
     {
         private string _name;
-        public BlockAttribute(string name)
+        public ContainerAttribute(string name)
         {
             _name = name;
         }
@@ -22,7 +22,7 @@ namespace selenium_wrapper.attribute
                 return _name;
             }
         }
-
+        
         public override string ToString()
         {
             return _name;

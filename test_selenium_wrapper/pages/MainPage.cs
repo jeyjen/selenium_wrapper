@@ -15,7 +15,7 @@ namespace test_selenium_wrapper.pages
 
         public override bool IsPage(Driver driver)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
