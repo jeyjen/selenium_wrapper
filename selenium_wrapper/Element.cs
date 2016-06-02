@@ -7,6 +7,7 @@ namespace selenium_wrapper
 {
     abstract public class Element
     {
+        public string XPath { get; set; }
         internal Frame[] Frames { get; set; }
         internal string FullPath { get; set; }
 
@@ -29,17 +30,17 @@ namespace selenium_wrapper
                 var attrs = it.GetMethod().ReflectedType.GetCustomAttributes(false);
                 foreach (var item in attrs)
                 {
-                    var pa = item as PageAttribute;
+                    var pa = item as NameAttribute;
                     if (pa != null)
                     {
                         _page = pa.Name;
                         continue;
                     }
-                    var ea = item as ElementAttribute;
-                    if (ea != null)
-                    {
-                        sb.Insert(0,string.Format(" > {0}", ea.Name));
-                    }
+                   /////////////
+                    //if (ea != null)
+                    //{
+                    //    sb.Insert(0,string.Format(" > {0}", ea.Name));
+                    //}
                 }
                 _path = sb.ToString();
             }
@@ -69,27 +70,5 @@ namespace selenium_wrapper
             return string.Format("<act>{0}</act> на <el>\"{1}\"</el> (\"<page>{2}</page> <path>{3}</path>\")", action, _name, _page, _path);
         }
     }
-
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ElementAttribute : Attribute
-    {
-        private string _name;
-        public ElementAttribute(string name)
-        {
-            _name = name;
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        public override string ToString()
-        {
-            return _name;
-        }
-    }
+    
 }

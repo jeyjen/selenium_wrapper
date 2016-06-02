@@ -17,9 +17,12 @@ namespace test_selenium_wrapper
             //var main = driver.Navigate<MainPage>("url");
             //main = driver.Switch<MainPage>();
             var main = new MainPage();
-            main.Header.Login.Click();
-            main.Header.Password.Click();
-            main.Header.Login.SetText();
+            main.header.Login.Click();
+            main.header.Password.Click();
+            main.header.Login.SetText();
+
+            main.footer.div.input.Click();
+
         }
     }
 }
