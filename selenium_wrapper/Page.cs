@@ -14,7 +14,7 @@ namespace selenium_wrapper
             // container
             // frame
             // element
-
+            /*
             Stack<object> els = new Stack<object>();
 
             object current = this;
@@ -44,10 +44,8 @@ namespace selenium_wrapper
 
                 }
             }
-            while(els.Count > 0)
-
+            while (els.Count > 0);*/
             
-
         }
         /// <summary>
         /// Проверяет что текущая страница является той страницей которая отображается
