@@ -8,6 +8,7 @@ namespace selenium_wrapper
 {
     public class Container
     {
+        public string XPath { get; set; }
         public Container()
         { }
 

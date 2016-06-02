@@ -9,28 +9,59 @@ namespace selenium_wrapper
 {
     public abstract class Page
     {
+        public class pair
+        {
+            public object obj { get; set; }
+            public int level { get; set; }
+        }
+
         public Page()
         {
             // container
             // frame
             // element
 
-            Stack<object> els = new Stack<object>();
+            Stack<pair> els = new Stack<pair>();
 
-            object current = this;
+            pair current;
             string full_xpath = "";
             List<Frame> frames = new List<Frame>();
+            els.Push(new pair() { obj = this, level = 0 });
+            int level = 1;
             do
             {
+                current = els.Pop();
+                if (current.level < level)
+                {
+                    // xpath пути и набора фреймов
+                }
+                
                 Type myType = current.GetType();
                 FieldInfo[] fields = myType.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 for (int i = 0; i < fields.Length; i++)
                 {
-                    var field = fields[i].GetValue(this);
+                    var field = fields[i].GetValue(current);
+                    
                     var attr = field.GetType().GetCustomAttribute(typeof(ContainerAttribute));
                     if (attr != null)
                     {
-                        els.Push(field);
+                        els.Push(new pair() { obj = field, level = level });
+                        level++;
+                        continue;
+                    }
+                    attr = field.GetType().GetCustomAttribute(typeof(FrameAttribute));
+                    if (attr != null)
+                    {
+                        els.Push(new pair() { obj = field, level = level });
+                        level++;
+                        continue;
+                    }
+
+                    attr = field.GetType().GetCustomAttribute(typeof(ElementAttribute));
+                    if (attr != null)
+                    {
+                        //els.Push(new pair() { obj = field, level = level });
+                        level++;
                         continue;
                     }
 
@@ -44,7 +75,7 @@ namespace selenium_wrapper
 
                 }
             }
-            while(els.Count > 0)
+            while (els.Count > 0);
 
             
 

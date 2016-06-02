@@ -11,6 +11,8 @@ namespace test_selenium_wrapper
         [TestMethod]
         public void TestMethod1()
         {
+            // Реализовать атрибут для описания кейса
+            
             //Driver driver =Driver.Instance();
             //var main = driver.Navigate<MainPage>("url");
             //main = driver.Switch<MainPage>();
