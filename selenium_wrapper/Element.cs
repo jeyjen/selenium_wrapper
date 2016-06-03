@@ -8,7 +8,7 @@ namespace selenium_wrapper
     abstract public class Element
     {
         internal Frame[] Frames { get; set; }
-        internal string FullPath { get; set; }
+        public string XPath { get; set; }
 
         public string _page;
         public string _path;
