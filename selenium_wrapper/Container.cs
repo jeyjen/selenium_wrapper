@@ -9,12 +9,10 @@ namespace selenium_wrapper
     public class Container
     {
         public string XPath { get; set; }
-        public Container()
-        { }
-
-        public Container(string xpathframe)
+        
+        public Container(string xpath)
         {
-
+            this.XPath = xpath;
         }
     }
 }

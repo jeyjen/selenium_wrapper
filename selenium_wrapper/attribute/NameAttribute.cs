@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace selenium_wrapper.attribute
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class PageAttribute: Attribute
+    public class NameAttribute: Attribute
     {
         private string _name;
-        public PageAttribute(string name)
+        public NameAttribute(string name)
         {
             _name = name;
         }

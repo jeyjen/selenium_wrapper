@@ -9,6 +9,5 @@ namespace selenium_wrapper.attribute
     [AttributeUsage(AttributeTargets.Class)]
     class FrameAttribute : Attribute
     {
-
     }
 }

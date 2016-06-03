@@ -5,14 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using test_selenium_wrapper.contaiters;
+using test_selenium_wrapper.frames;
 
 namespace test_selenium_wrapper.pages
 {
-    [Page("Главная страница")]
+    [Name("Главная страница")]
     public class MainPage : Page
     {
-        public Header Header = new Header("");
-
+        public Header header = new Header("p1");
+        public Footer footer = new Footer("footer");
+        public ContentFrame content = new ContentFrame("content");
         public override bool IsPage(Driver driver)
         {
             return true;
