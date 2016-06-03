@@ -59,7 +59,6 @@
     <Compile Include="contaiters\Footer.cs" />
     <Compile Include="contaiters\Header.cs" />
     <Compile Include="contaiters\Sidebar.cs" />
-    <Compile Include="frames\ContentFrame.cs" />
     <Compile Include="pages\MainPage.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

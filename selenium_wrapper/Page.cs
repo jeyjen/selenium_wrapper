@@ -29,7 +29,7 @@ namespace selenium_wrapper
     {
         public class pair
         {
-            public object obj { get; set; }
+            public Container container { get; set; }
             public int level { get; set; }
         }
 
@@ -40,29 +40,89 @@ namespace selenium_wrapper
             // element
 
             Stack<pair> els = new Stack<pair>();
+            Stack<int> context = new Stack<int>();
 
-            pair current = new pair() { obj = this, level = -1 };
+            pair current = null;
             pair prev = current;
             List<string> path = new List<string>();
+            path.Add("");
             List<Frame> frames = new List<Frame>();
             els.Push(current);
             int level = 0;
             int down = 0;
-            do
+            Frame frame = null;
+
+            // Заполнить els элементами страницы
+            Type type = this.GetType();
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            for (int i = 0; i < fields.Length; i++)
             {
+                var field = fields[i].GetValue(current.container);
+                if (field is Container)
+                {
+                    var cntr = (Container) field;
+                    els.Push(new pair() { container = cntr, level = level });
+                }
+                else if (field is Element)
+                {
+                    var element = (Element)field;
+                    element.Frames = frames.ToArray();
+                }
+            }
+
+            while (els.Count > 0)
+            {
+
+                // проверкой предыдущего элемента доводить до нормального состояния
+                // дальше выполнять нормальную проверку.
+
+                // если level понизился
+                    // если предыдущий элемент фрейм
+                        // удалить посследний фрем из списка
+                        // удалить последнюю запись  из контекста
+
+                // если level повысился
+                    // если текущий элемент фрейм
+                        // записать в стек фреймов с путем до предыдущего контекста
+                        // записать в контекст позицию
+                    // если элемент контейнер
+                        // переписать путь по текущему level
+
+                
+
+
+                frame = null;
                 current = els.Pop();
+                var attr = current.container.GetType().GetCustomAttributes(typeof(FrameAttribute));
                 if (current.level < level)
                 {
-                    // если предыдущий был фрейм то удалить последний фрейм
-                    level = current.level;
-                    if (prev.obj is Container)
+                    if (attr == null)
                     {
-                        //path;
+                        rewrite(path, level, current.container.XPath);
+                    }
+                    else
+                    {
+                        frames.RemoveAt(frames.Count - 1);
+                        context.Pop();
                     }
                 }
-                var attr = current.obj.GetType().GetCustomAttributes(typeof(FrameAttribute));
-                var container = (Container)current.obj;
-                Frame frame = null;
+                else
+                {
+                    if (attr == null) // если контейнер
+                    {
+                        rewrite(path, level, current.container.XPath);
+                    }
+                    else // если фрейм
+                    {
+                        frames.Add(new Frame(compile_path(path, context.Peek(), level) + current.container.XPath));
+                        context.Push(level);
+                    }
+                }
+                
+                level = current.level;
+                down = context.Peek();
+                
+                var container = (Container)current.container;
                 if (attr != null)
                 {
                     down = level;
@@ -74,22 +134,24 @@ namespace selenium_wrapper
                     rewrite(path, level, container.XPath);
                 }
                 
-                Type type = current.obj.GetType();
+                Type type = current.container.GetType();
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 bool up_level = false;
                 for (int i = 0; i < fields.Length; i++)
                 {
-                    var field = fields[i].GetValue(current.obj);
+                    var field = fields[i].GetValue(current.container);
                     
                     if (field is Container)
                     {
-                        els.Push(new pair() { obj = field, level = level});
+                        var contr = (Container)field;
+                        contr.XPath = compile_path(path, down, level);
+                        els.Push(new pair() { container = field, level = level});
                         up_level = true;
                     }else if (field is Element)
                     {
                         var element = (Element)field;
-                        //element.XPath = compile_path(path, element.XPath);
-                        //element.Frames = frames.ToArray();
+                        element.XPath = compile_path(path, down, level) + element.XPath;
+                        element.Frames = frames.ToArray();
                     }
                 }
                 if (up_level)
@@ -98,7 +160,6 @@ namespace selenium_wrapper
                 }
                 prev = current;
             }
-            while (els.Count > 0);
         }
 
         private string compile_path(List<string> path, int from, int to)
