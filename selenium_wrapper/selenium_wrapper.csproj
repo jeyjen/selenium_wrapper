@@ -53,10 +53,13 @@
     <Compile Include="attribute\ActionAttribute.cs" />
     <Compile Include="attribute\FrameAttribute.cs" />
     <Compile Include="attribute\NameAttribute.cs" />
+    <Compile Include="CollectionElement.cs" />
     <Compile Include="Container.cs" />
+    <Compile Include="doc.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="element\Input.cs" />
+    <Compile Include="element\Select.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />

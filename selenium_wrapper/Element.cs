@@ -7,19 +7,17 @@ namespace selenium_wrapper
 {
     abstract public class Element
     {
-        internal Frame[] Frames { get; set; }
+        public Frame[] Frames { get; set; }
         public string XPath { get; set; }
+
 
         public string _page;
         public string _path;
-        public string _name;
         public string _type;
-        public bool _is_requere;
 
-        public Element(string name, bool is_require = false)
+        public Element(string xpath)
         {
-            _name = name;
-            _is_requere = is_require;
+            XPath = xpath;
 
             // Получение базовой страницы
             StackFrame[] frames = new StackTrace().GetFrames();
@@ -66,7 +64,7 @@ namespace selenium_wrapper
                     break;
                 }
             }
-            return string.Format("<act>{0}</act> на <el>\"{1}\"</el> (\"<page>{2}</page> <path>{3}</path>\")", action, _name, _page, _path);
+            return string.Format("<act>{0}</act> на <el>\"{1}\"</el> (\"<page>{2}</page> <path>{3}</path>\")", action, "имя элемента", _page, _path);
         }
     }
     

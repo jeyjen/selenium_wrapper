@@ -55,10 +55,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="contaiters\Div.cs" />
-    <Compile Include="contaiters\Footer.cs" />
-    <Compile Include="contaiters\Header.cs" />
-    <Compile Include="contaiters\Sidebar.cs" />
+    <Compile Include="contaiters\Container2.cs" />
+    <Compile Include="contaiters\Container3.cs" />
+    <Compile Include="contaiters\Container4.cs" />
+    <Compile Include="contaiters\Frame1.cs" />
+    <Compile Include="contaiters\Container1.cs" />
+    <Compile Include="contaiters\Frame2.cs" />
     <Compile Include="pages\MainPage.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

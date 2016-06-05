@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace selenium_wrapper.element
 {
-    [Element("поле ввода")]
+    [Name("поле ввода")]
     public class Input: Element
     {
         public Input(string name) : base(name)

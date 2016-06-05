@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace selenium_wrapper.attribute
 {
     [AttributeUsage(AttributeTargets.Class)]
-    class FrameAttribute : Attribute
+    public class FrameAttribute : Attribute
     {
     }
 }

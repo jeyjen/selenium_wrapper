@@ -17,12 +17,15 @@ namespace test_selenium_wrapper
             //var main = driver.Navigate<MainPage>("url");
             //main = driver.Switch<MainPage>();
             var main = new MainPage();
-            main.header.Login.Click();
-            main.header.Password.Click();
-            main.header.Login.SetText();
+            main.container1.frame1.container2.input.Click();
+            
 
-            main.footer.div.input.Click();
+            var select = main.container3.frame2.container4.select;
+            select.Click();
+            /*
+             не очистились фреймы два вместо одного у элемента
 
+             */
         }
     }
 }

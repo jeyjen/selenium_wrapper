@@ -13,6 +13,11 @@ namespace selenium_wrapper.attribute
     [Serializable]
     class ActionAttribute : MethodInterceptionAspect
     {
+        /*
+        Записывать время выполнения действия
+         
+        */
+
         private string _name;
         public ActionAttribute(string name)
         {

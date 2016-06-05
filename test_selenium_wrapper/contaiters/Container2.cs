@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace test_selenium_wrapper.contaiters
 {
-    public class Div: Container
+    public class Container2: Container
     {
-        public Input input = new Input("");
-        public Div(string xpath) : base(xpath)
+        public Input input = new Input("/input3");
+
+        public Container2(string xpath) : base(xpath)
         { }
     }
 }

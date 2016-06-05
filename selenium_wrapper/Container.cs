@@ -9,6 +9,7 @@ namespace selenium_wrapper
     public class Container
     {
         public string XPath { get; set; }
+        public Frame[] Frames { get; set; }
         
         public Container(string xpath)
         {
