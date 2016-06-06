@@ -14,11 +14,9 @@ namespace test_selenium_wrapper.pages
     [Name("Главная страница")]
     public class MainPage : Page
     {
-        public Container1 container1 = new Container1("/container1");
-        public Container3 container3 = new Container3("/container3");
-        public Input input = new Input("/input6");
+        public SearchForm search = new SearchForm("//form[@id='tsf']");
 
-        public override bool IsPage(Driver driver)
+        public override bool IsPage()
         {
             return true;
         }

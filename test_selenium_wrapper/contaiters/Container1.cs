@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 
 namespace test_selenium_wrapper.contaiters
 {
-    public class Container1: Container
+    public class SearchForm: Container
     {
-        public Input FirstName = new Input("/input1");
-        public Input LastName = new Input("/input2");
+        public Text search_line = new Text(
+            "//input[@id='lst-ib']", 
+            "строка поиска");
+        public Button search = new Button(
+            "//button[@value='Поиск']", 
+            "поиск");
+        public Button happy = new Button(
+            "//input[@value='Мне повезёт!']", 
+            "мне повезет");
 
-        public Frame1 frame1 = new Frame1("/frame1");
-
-        public Container1(string xpath):base(xpath)
+        public SearchForm(string xpath):base(xpath)
         { 
         }
     }

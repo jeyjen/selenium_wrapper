@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace selenium_wrapper
 {
-    public class Container
+    public class Container : UIElement
     {
-        public string XPath { get; set; }
-        public Frame[] Frames { get; set; }
-        
+        public Container()
+        {
+            _xpath = "";
+        }
+
         public Container(string xpath)
         {
-            this.XPath = xpath;
+            _xpath = xpath == null? "": xpath;
         }
     }
 }

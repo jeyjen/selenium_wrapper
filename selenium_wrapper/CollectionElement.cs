@@ -8,11 +8,16 @@ namespace selenium_wrapper
 {
     public abstract class CollectionElement : Element
     {
+        internal string _item_xpath;
+
         public CollectionElement(string xpath, string xpath_item) : base(xpath)
         {
-            ItemXPath = xpath_item;
+            _item_xpath = xpath_item;
         }
 
-        public string ItemXPath { get; set; }
+        public string ItemXPath
+        {
+            get { return _item_xpath; }
+        }
     }
 }

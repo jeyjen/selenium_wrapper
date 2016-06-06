@@ -30,30 +30,34 @@ namespace selenium_wrapper
         }
     }
 
-    public abstract class Page
+    public class Pair
     {
-        public class pair
-        {
-            public Container container { get; set; }
-            public int level { get; set; }
+        public Container container { get; set; }
+        public int level { get; set; }
 
-            public override string ToString()
-            {
-                return string.Format("{0} : {1}", container.GetType().Name, level);
-            }
+        public override string ToString()
+        {
+            return string.Format("{0} : {1}", container.GetType().Name, level);
         }
+    }
+
+    public abstract class Page : Container
+    {
+        internal string _handle;
 
         public Page()
         {
-            // container
-            // frame
-            // element
+            
+        }
 
-            Stack<pair> els = new Stack<pair>();
+        internal void Prepare()
+        {
+            Stack<Pair> els = new Stack<Pair>();
+            els.Push(new Pair() { container = this, level = 0 });
             Stack<int> context = new Stack<int>();
             context.Push(0);
-            pair current = null;
-            pair prev = current;
+            Pair current = null;
+            Pair prev = current;
             List<string> path = new List<string>();
             List<Frame> frames = new List<Frame>();
             int level = 0;
@@ -61,6 +65,8 @@ namespace selenium_wrapper
             Frame frame = null;
 
             // Заполнить els элементами страницы
+
+            /*
             Type type = this.GetType();
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
             for (int i = 0; i < fields.Length; i++)
@@ -69,34 +75,32 @@ namespace selenium_wrapper
                 if (field is Container)
                 {
                     var cntr = (Container) field;
-                    els.Push(new pair() { container = cntr, level = level});
+                    els.Push(new Pair() { container = cntr, level = level});
                 }
                 else if (field is Element)
                 {
                     var element = (Element)field;
-                    element.Frames = frames.ToArray();
+                    element._frames = frames.ToArray();
                 }
             }
-
+            */
+            Type type = null;
+            FieldInfo[] fields = null;
             while (els.Count > 0)
             {
 
                 // если level понизился
-                    // если предыдущий элемент фрейм
-                        // удалить посследний фрем из списка
-                        // удалить последнюю запись  из контекста
+                // если предыдущий элемент фрейм
+                // удалить посследний фрем из списка
+                // удалить последнюю запись  из контекста
 
                 // если level повысился
-                    // если текущий элемент фрейм
-                        // записать в стек фреймов с путем до предыдущего контекста
-                        // записать в контекст позицию
-                    // если элемент контейнер
-                        // переписать путь по текущему level
+                // если текущий элемент фрейм
+                // записать в стек фреймов с путем до предыдущего контекста
+                // записать в контекст позицию
+                // если элемент контейнер
+                // переписать путь по текущему level
 
-                
-
-
-                
                 current = els.Pop();
                 level = current.level;
                 prepare_context(frames, context, level);
@@ -111,32 +115,37 @@ namespace selenium_wrapper
                 {
                     rewrite_context(frames, context, level, new Frame(current.container.XPath));
                 }
-                
+
                 down = context.Peek();
-                
+
                 type = current.container.GetType();
                 fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 bool up_level = false;
                 for (int i = 0; i < fields.Length; i++)
                 {
                     var field = fields[i].GetValue(current.container);
-                    
+
                     if (field is Container)
                     {
                         var contr = (Container)field;
-                        contr.Frames = compile_frames(frames, down, level);
-                        contr.XPath = compile_path(path, down, level) + contr.XPath;
-                        els.Push(new pair() { container = contr, level = level + 1});
+                        contr._session = this._session;
+                        contr._frames = compile_frames(frames, down, level);
+                        contr._xpath = compile_path(path, down, level) + contr._xpath;
+                        els.Push(new Pair() { container = contr, level = level + 1 });
                         up_level = true;
-                    }else if (field is Element)
+                    }
+                    else if (field is Element)
                     {
                         var element = (Element)field;
-                        element.Frames = compile_frames(frames, down, level);
-                        element.XPath = compile_path(path, down, level) + element.XPath;
+                        element._session = this._session;
+                        element._frames = compile_frames(frames, down, level);
+                        element._xpath = compile_path(path, down, level) + element._xpath;
+                        element._page = this;
+                        element._parent = current.container;
                         if (field is CollectionElement)
                         {
                             var collection_element = (CollectionElement)field;
-                            collection_element.ItemXPath = compile_path(path, down, level) + collection_element.ItemXPath;
+                            collection_element._item_xpath = compile_path(path, down, level) + collection_element._item_xpath;
                         }
                     }
                 }
@@ -225,7 +234,7 @@ namespace selenium_wrapper
         /// </summary>
         /// <param name="driver"></param>
         /// <returns></returns>
-        public abstract bool IsPage(Driver driver);
+        public abstract bool IsPage(); // у страницы будет доступен объект сессии у котороего есть и драйвер и логгер и тестовые данные
 
         // проверяет наличие всех элементов
 

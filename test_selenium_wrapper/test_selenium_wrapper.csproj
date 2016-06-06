@@ -41,6 +41,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,12 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="contaiters\Container2.cs" />
-    <Compile Include="contaiters\Container3.cs" />
-    <Compile Include="contaiters\Container4.cs" />
-    <Compile Include="contaiters\Frame1.cs" />
     <Compile Include="contaiters\Container1.cs" />
-    <Compile Include="contaiters\Frame2.cs" />
     <Compile Include="pages\MainPage.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +68,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
