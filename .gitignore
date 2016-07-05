@@ -1,5 +1,4 @@
-/RP_Copy_Dictionary/bin
 obj
 bin
 packages
-/.vs/selenium_wrapper/v14/*.suo
+*.suo
